@@ -13,7 +13,7 @@ namespace Infrastructure.Repository
             _appDbContext = appDbContext;
         }
 
-        public async Task<IReadOnlyList<T>> GetAsAsync()
+        public async Task<IReadOnlyList<T>> GetListAsAsync()
         {
             return await _appDbContext.Set<T>().ToListAsync();
         }

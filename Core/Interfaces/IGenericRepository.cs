@@ -6,7 +6,7 @@ namespace Core.Interfaces
     {
         Task<T> GetByIdAsAsync(int id);
 
-        Task<IReadOnlyList<T>> GetAsAsync();
+        Task<IReadOnlyList<T>> GetListAsAsync();
 
     }
 }
