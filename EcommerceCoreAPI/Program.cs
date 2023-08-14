@@ -1,4 +1,5 @@
 using Core.Interfaces;
+using EcommerceCoreAPI.Middlewares;
 using Infrastructure.Data;
 using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,8 @@ builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseStatusCodePagesWithReExecute("/errors/{0}");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
