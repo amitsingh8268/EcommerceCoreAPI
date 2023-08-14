@@ -30,9 +30,9 @@ namespace EcommerceCoreAPI.Middlewares
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                 var response = _environment.IsDevelopment() ? new ApiException((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString())
                     : new ApiException((int)HttpStatusCode.InternalServerError, ex.Message);
-                    var json = JsonSerializer.Serialize(response);
-
-
+                    
+                
+                var json = JsonSerializer.Serialize(response);
                 await context.Response.WriteAsync(json);
             }
         }

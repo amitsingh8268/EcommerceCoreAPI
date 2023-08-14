@@ -3,6 +3,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Core.Specifications;
 using EcommerceCoreAPI.Dtos;
+using EcommerceCoreAPI.Errors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EcommerceCoreAPI.Controllers
@@ -24,7 +25,7 @@ namespace EcommerceCoreAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IReadOnlyList<Product>>> GetProducts()
+        public async Task<ActionResult<IReadOnlyList<ProductToReturnDTO>>> GetProducts()
         {
             var spec = new ProductWithTypeAndBrandSpecification();
             var products = await _productRepo.ListAsync(spec);
@@ -32,9 +33,12 @@ namespace EcommerceCoreAPI.Controllers
         }
 
         [HttpGet("id")]
-        public async  Task<ActionResult<Product>> GetProductById(int id) {
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ApiResponse),StatusCodes.Status404NotFound)]
+        public async  Task<ActionResult<ProductToReturnDTO>> GetProductById(int id) {
             var spec = new ProductWithTypeAndBrandSpecification(id);
             var product = await _productRepo.GetEntityWithSpec(spec);
+            if(product == null) { return NotFound(new ApiResponse(404));}
             return Ok(_mapper.Map<ProductToReturnDTO>(product));
         }
 
@@ -51,9 +55,6 @@ namespace EcommerceCoreAPI.Controllers
             var productType = await _productTypeRepo.GetListAsAsync();
             return Ok(productType);
         }
-
-
-
     }
 }
     

@@ -1,21 +1,14 @@
-using Core.Interfaces;
+using EcommerceCoreAPI.Extension;
 using EcommerceCoreAPI.Middlewares;
 using Infrastructure.Data;
-using Infrastructure.Repository;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(builder.Configuration["connectionString:connection"]));
-builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+builder.Services.AddApplicationServices(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
