@@ -15,6 +15,13 @@ namespace EcommerceCoreAPI.Extension
             Services.AddDbContext<AppDbContext>(option => option.UseSqlServer(config["connectionString:connection"]));
             Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            Services.AddCors(opt =>
+            {
+                opt.AddPolicy("corsPolicy", policy =>
+                {
+                    policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod();
+                });
+            });
             return Services;
         }
     }

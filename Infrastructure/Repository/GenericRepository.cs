@@ -29,6 +29,11 @@ namespace Infrastructure.Repository
             return await ApplySpecification(spec).FirstOrDefaultAsync();
         }
 
+        public async Task<int> CountAsync(ISpecification<T> spex)
+        {
+            return await ApplySpecification(spex).CountAsync();
+        }
+
         public async Task<IReadOnlyList<T>> ListAsync(ISpecification<T> spec)
         {
             return await ApplySpecification(spec).ToListAsync();
@@ -38,5 +43,7 @@ namespace Infrastructure.Repository
         {
             return SpecificationEvaluator<T>.GetQuery(_appDbContext.Set<T>().AsQueryable(), spec);
         }
+
+        
     }
 }
